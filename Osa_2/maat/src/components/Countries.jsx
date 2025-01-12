@@ -1,6 +1,5 @@
 import Country from './Country'
 
-
 const Countries = ({ countriesToShow, setCountryFilter }) => {
 
     if (countriesToShow.length > 10) {
