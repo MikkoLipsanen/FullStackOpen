@@ -56,8 +56,8 @@ const App = () => {
           setPersons(persons.filter(p => p.id !== person.id))
           setMessageType('error')
           setTimeout(() => {
-          setMessage(null)
-          setMessageType(null)
+            setMessage(null)
+            setMessageType(null)
           }, 5000)
         })
       }
@@ -77,6 +77,14 @@ const App = () => {
           setMessageType(null)
         }, 5000)
       }) 
+      .catch(error => {
+        setMessage(error.response.data.error)
+        setMessageType('error')
+        setTimeout(() => {
+          setMessage(null)
+          setMessageType(null)
+        }, 5000)
+      })
     }
   }
 
