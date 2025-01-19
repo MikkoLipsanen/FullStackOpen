@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Just a Blog",
+    "author": "Justin B. Post",
+    "url": "www.justablog.com",
+    "lines": 609876
+}
