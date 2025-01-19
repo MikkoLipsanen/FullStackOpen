@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Just a Blog",
-    "author": "Justin B. Post",
-    "url": "www.justablog.com",
-    "lines": 609876
+    "title": "Blog from Hell",
+    "author": "JD. Evil",
+    "url": "www.666.com",
+    "lines": 666
 }
