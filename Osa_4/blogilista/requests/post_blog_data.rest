@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1jbGlwc2FuIiwiaWQiOiI2Nzk1NTQ2YWY0YzRjZTg2OGRhMmM5ZWMiLCJpYXQiOjE3Mzc4NDQ4ODZ9.NJ1NTkQajIY9Mse26CBCinyTWCTW4dEFoa02hqHMiMs
 
 {
-    "title": "What is Python anyways",
-    "author": "JS Smith",
-    "url": "www.usejs.com",
-    "likes": 322
+    "title": "Token is the key",
+    "author": "T. O. Ken",
+    "url": "www.tokens.com",
+    "likes": 433
 }
