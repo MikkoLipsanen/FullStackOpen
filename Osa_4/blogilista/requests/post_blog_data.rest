@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1jbGlwc2FuIiwiaWQiOiI2Nzk1NTQ2YWY0YzRjZTg2OGRhMmM5ZWMiLCJpYXQiOjE3Mzc4NDQ4ODZ9.NJ1NTkQajIY9Mse26CBCinyTWCTW4dEFoa02hqHMiMs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im51dXNrYW0iLCJpZCI6IjY3OTYxZjk4YjQ0ZmRmZGU0YzhhOWQzYyIsImlhdCI6MTczNzg5MTc3MX0.GG09Kiv3Hjd0yyqlmhG9N97h5ePCuELGJ5ubhqbbiYY
 
 {
-    "title": "Token is the key",
-    "author": "T. O. Ken",
-    "url": "www.tokens.com",
-    "likes": 433
+    "title": "Muumitalon putkiremppa",
+    "author": "Hemuli",
+    "url": "www.linjasaneeraus.com",
+    "likes": 90
 }
