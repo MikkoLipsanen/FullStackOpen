@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im51dXNrYW0iLCJpZCI6IjY3OTYxZjk4YjQ0ZmRmZGU0YzhhOWQzYyIsImlhdCI6MTczNzg5MTc3MX0.GG09Kiv3Hjd0yyqlmhG9N97h5ePCuELGJ5ubhqbbiYY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im51dXNrYW0iLCJpZCI6IjY3OTYxZjk4YjQ0ZmRmZGU0YzhhOWQzYyIsImlhdCI6MTczNzg5NTU0OH0.OLlgPxGlUh78FvFjAV0Fw2vC9Ct7NIUg0R8ErjNCVJU
 
 {
-    "title": "Muumitalon putkiremppa",
-    "author": "Hemuli",
-    "url": "www.linjasaneeraus.com",
-    "likes": 90
+    "title": "Niiskun keksinnöt 2",
+    "author": "Niiskuneiti",
+    "url": "www.neiti.com",
+    "likes": 99
 }
