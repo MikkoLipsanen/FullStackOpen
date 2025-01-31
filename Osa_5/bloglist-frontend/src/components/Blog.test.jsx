@@ -9,9 +9,9 @@ describe('<Blog />', () => {
     url: 'www.react.com',
     likes: 67,
     user: {
-        _id: '98765',
-        name: 'Jaska J.',
-        username: 'jjokunen'
+      _id: '98765',
+      name: 'Jaska J.',
+      username: 'jjokunen'
     }
   }
 

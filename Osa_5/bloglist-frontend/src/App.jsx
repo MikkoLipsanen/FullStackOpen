@@ -25,7 +25,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs(sortBlogs(blogs))
     )
-  }, [])
+  }, [blogs])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -68,6 +68,7 @@ const App = () => {
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(sortBlogs(blogs.concat(returnedBlog)))
+        console.log(JSON.stringify(returnedBlog))
         setMessage(`A new blog ${returnedBlog.title} by ${returnedBlog.author.name} added`)
         setMessageType('notification')
         setTimeout(() => {
@@ -113,22 +114,24 @@ const App = () => {
           <div>
             username
             <input
-              type="text"
+              data-testid='username'
+              type='text'
               value={username}
-              name="Username"
+              name='Username'
               onChange={({ target }) => setUsername(target.value)}
             />
           </div>
           <div>
             password
             <input
-              type="password"
+              data-testid='password'
+              type='password'
               value={password}
-              name="Password"
+              name='Password'
               onChange={({ target }) => setPassword(target.value)}
             />
           </div>
-          <button type="submit">login</button>
+          <button type='submit'>login</button>
         </form>
       </div>
     )
@@ -143,7 +146,7 @@ const App = () => {
         <Blog key={blog.id} blog={blog} addLike={addLike} removeBlog={removeBlog} user={user} />
       )}
       <h2>create new</h2>
-      <Togglable buttonLabel="new blog" ref={blogFormRef}>
+      <Togglable buttonLabel='new blog' ref={blogFormRef}>
         <BlogForm createBlog={addBlog} />
       </Togglable>
     </div>
