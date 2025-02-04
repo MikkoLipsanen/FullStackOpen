@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { voteAnecdote } from '../reducers/anecdoteReducer'
+import { notificationChange } from '../reducers/notificationReducer'
 
 import PropTypes from 'prop-types';
 
@@ -23,14 +24,22 @@ const sortAnecdotes = anecdotes => {
 }
 
 const AnecdoteList = () => {
-
   const dispatch = useDispatch()
+
   const anecdotes = useSelector(({ filter, anecdotes }) => {
     if ( filter === '' ) {
       return sortAnecdotes(anecdotes)
     }
     return sortAnecdotes(anecdotes.filter(anecdote => anecdote.content.toUpperCase().includes(filter.toUpperCase())))
   })
+
+  const addVote = anecdote => {
+    dispatch(voteAnecdote(anecdote.id))
+    dispatch(notificationChange(`You voted '${anecdote.content}'`))
+    setTimeout(() => {
+      dispatch(notificationChange(''))
+    }, 5000)
+  }
 
   return (
     <div>
@@ -39,7 +48,7 @@ const AnecdoteList = () => {
           key={anecdote.id}
           anecdote={anecdote}
           handleClick={() => 
-            dispatch(voteAnecdote(anecdote.id))
+            addVote(anecdote)
           }
         />
       )}
