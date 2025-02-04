@@ -25,7 +25,12 @@ const sortAnecdotes = anecdotes => {
 const AnecdoteList = () => {
 
   const dispatch = useDispatch()
-  const anecdotes = sortAnecdotes(useSelector(state => state))
+  const anecdotes = useSelector(({ filter, anecdotes }) => {
+    if ( filter === '' ) {
+      return sortAnecdotes(anecdotes)
+    }
+    return sortAnecdotes(anecdotes.filter(anecdote => anecdote.content.toUpperCase().includes(filter.toUpperCase())))
+  })
 
   return (
     <div>
