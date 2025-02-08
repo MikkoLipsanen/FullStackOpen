@@ -1,0 +1,76 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "content": "custom-hooks are awesome!"
+    },
+    {
+      "id": 2,
+      "content": "best feature ever <3"
+    },
+    {
+      "content": "Nootti",
+      "id": 3
+    },
+    {
+      "content": "Botti",
+      "id": 4
+    },
+    {
+      "content": "Masa",
+      "id": 5
+    },
+    {
+      "content": "Hullua",
+      "id": 6
+    },
+    {
+      "content": "Mitä kummaa",
+      "id": 7
+    },
+    {
+      "content": "Halinalle",
+      "id": 8
+    },
+    {
+      "content": "Milla Magia",
+      "id": 9
+    },
+    {
+      "content": "Milla Magia",
+      "id": 10
+    }
+  ],
+  "persons": [
+    {
+      "id": 1,
+      "name": "mluukkai",
+      "number": "040-5483923"
+    },
+    {
+      "id": 2,
+      "name": "hellas",
+      "number": "012-123123"
+    },
+    {
+      "name": "Jaska J",
+      "number": "066-66543234",
+      "id": 3
+    },
+    {
+      "name": "Kaija K",
+      "number": "699-696969",
+      "id": 4
+    },
+    {
+      "name": "Hassan",
+      "number": "077-777777",
+      "id": 5
+    },
+    {
+      "name": "Malla M",
+      "number": "099-87654543",
+      "id": 6
+    }
+  ]
+}
