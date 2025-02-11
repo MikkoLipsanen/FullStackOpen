@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createTimedNotification } from './notificationReducer'
+import { initializeUsers } from './usersReducer'
 import blogService from '../services/blogs'
 
 const sortBlogs = (blogs) => {
@@ -50,6 +51,7 @@ export const createBlog = (content, user) => {
             }
         }
         dispatch(appendBlog(appendedBlog))
+        dispatch(initializeUsers())
         dispatch(
             createTimedNotification({
                 message: `A new blog ${newBlog.title} by ${newBlog.author} added`,
@@ -83,6 +85,13 @@ export const addLike = (blog) => {
         }
         const updatedBlog = await blogService.updateBlog(changedBlog)
         updatedBlog.user = blog.user
+        dispatch(replaceBlog(updatedBlog))
+    }
+}
+
+export const addComment = (comment) => {
+    return async (dispatch) => {
+        const updatedBlog = await blogService.addComment(comment)
         dispatch(replaceBlog(updatedBlog))
     }
 }
