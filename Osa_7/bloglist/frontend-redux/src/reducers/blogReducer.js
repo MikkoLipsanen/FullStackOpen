@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux'
 import { createTimedNotification } from './notificationReducer'
 import blogService from '../services/blogs'
 
