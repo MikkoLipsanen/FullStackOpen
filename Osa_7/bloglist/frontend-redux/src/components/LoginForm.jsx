@@ -1,5 +1,10 @@
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import {
+    TextField,
+    Button
+} from '@mui/material'
+
 import { loginUser } from '../reducers/userReducer'
 
 const LoginForm = () => {
@@ -21,14 +26,17 @@ const LoginForm = () => {
             <h2>Log in to application</h2>
             <form onSubmit={handleLogin}>
                 <div>
-                    username
-                    <input name="username" />
+                    <TextField name="username" label="username" />
+                </div>
+                <br></br>
+                <div>
+                    <TextField name="password" label="password" type='password' />
                 </div>
                 <div>
-                    password
-                    <input name="password" />
+                    <Button variant="contained" color="primary" type="submit">
+                        login
+                    </Button>
                 </div>
-                <button type="submit">login</button>
             </form>
         </div>
     )

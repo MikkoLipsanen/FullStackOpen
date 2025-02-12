@@ -1,5 +1,6 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
 import PropTypes from 'prop-types'
+import { Button } from '@mui/material'
 
 const Togglable = forwardRef((props, ref) => {
     const [visible, setVisible] = useState(false)
@@ -20,11 +21,21 @@ const Togglable = forwardRef((props, ref) => {
     return (
         <div>
             <div style={hideWhenVisible}>
-                <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+                <div>
+                    <Button variant="outlined" color="primary" onClick={toggleVisibility} >
+                        {props.buttonLabel}
+                    </Button>
+                </div>
+                <br></br>
             </div>
             <div style={showWhenVisible}>
                 {props.children}
-                <button onClick={toggleVisibility}>cancel</button>
+                <div>
+                    <Button variant="outlined" color="primary" onClick={toggleVisibility} >
+                        cancel
+                    </Button>
+                </div>
+                <br></br>
             </div>
         </div>
     )

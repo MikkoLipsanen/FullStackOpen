@@ -1,6 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Routes, Route, Link, useMatch } from 'react-router-dom'
+import { Container } from '@mui/material'
+
+import {
+    Button,
+    AppBar,
+    Toolbar,
+    Alert
+  } from '@mui/material'
 
 import Blogs from './components/Blogs'
 import Blog from './components/Blog'
@@ -52,18 +60,26 @@ const App = () => {
         : null
 
     return (
-        <div>
+        <Container>
             <div> 
                 <Notification />
                 {!loggedUser ?
                     <LoginForm />
                 :
                     <div>
-                        <div>
-                            <Link style={padding} to="/">blogs</Link>
-                            <Link style={padding} to="/users">users</Link>
-                            <Header user={loggedUser} />
-                        </div>
+                        <AppBar position="static">
+                            <Toolbar>
+                                <Button color="inherit" component={Link} to="/">
+                                    Blogs
+                                </Button>
+                                <Button color="inherit" component={Link} to="/users">
+                                    Users
+                                </Button>
+                                <Header user={loggedUser} />
+                            </Toolbar>
+                        </AppBar>
+
+                        <br></br>
 
                         <Routes>
                             <Route path="/users/:id" element={<User user={user} />} />
@@ -81,7 +97,7 @@ const App = () => {
                     </div>
                 }
             </div>  
-        </div>
+        </Container>
     )
 }
 
