@@ -94,8 +94,7 @@ const resolvers = {
         }
       }
       if (!args.author && args.genre) {
-        console.log(args.genre)
-        return await Book.find({ genres: args.genre })
+        return await Book.find({ genres: args.genre }).populate('author', { name: 1, born: 1, id: 1 })
       }
       if (args.author && args.genre) {
         const author = await Author.findOne({ name: args.author })

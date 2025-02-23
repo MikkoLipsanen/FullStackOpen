@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { ALL_AUTHORS, EDIT_BIRTHYEAR } from '../queries'
 
-const Authors = ({ show }) => {
+const Authors = ({ setError, show }) => {
   const [name, setName] = useState('')
   const [born, setBorn] = useState('')
 
@@ -11,7 +11,11 @@ const Authors = ({ show }) => {
   const authorsWithoutBirthyear = authors.loading ? null : authors.data.allAuthors.filter(a => a.born === null)
 
   const [ changeBirthyear ] = useMutation(EDIT_BIRTHYEAR, {
-    refetchQueries: [ { query: ALL_AUTHORS } ]
+    refetchQueries: [ { query: ALL_AUTHORS } ],
+    onError: (error) => {
+      const messages = error.graphQLErrors.map(e => e.message).join('\n')
+      setError(messages)
+    }
   })
   
   if (!show) {
