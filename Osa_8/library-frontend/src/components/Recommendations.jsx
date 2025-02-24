@@ -3,11 +3,10 @@ import { GET_USER, GENRE_BOOKS } from '../queries'
 
 const Recommendations = ({ show }) => {
     const user = useQuery(GET_USER, {
-        pollInterval: 50
+      pollInterval: 1000
     })
 
     const favoriteGenre = user?.data?.me?.favoriteGenre ? user.data.me.favoriteGenre : null
-
     const genreBooks = useQuery(GENRE_BOOKS, {
         variables: { genre: favoriteGenre },
         skip: !favoriteGenre

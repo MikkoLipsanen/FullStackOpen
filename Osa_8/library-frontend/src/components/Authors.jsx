@@ -8,7 +8,7 @@ const Authors = ({ setError, show }) => {
   const [born, setBorn] = useState('')
 
   const authors = useQuery(ALL_AUTHORS)
-  const authorsWithoutBirthyear = authors.loading ? null : authors.data.allAuthors.filter(a => a.born === null)
+  const authorsWithoutBirthyear = authors?.data?.allAuthors ? authors.data.allAuthors.filter(a => a.born === null) : null
 
   const [ changeBirthyear ] = useMutation(EDIT_BIRTHYEAR, {
     refetchQueries: [ { query: ALL_AUTHORS } ],
@@ -17,8 +17,7 @@ const Authors = ({ setError, show }) => {
       setError(messages)
     }
   })
-  
-  if (!show) {
+  if (!show || !authors?.data?.allAuthors ) {
     return null
   }
 
@@ -49,7 +48,7 @@ const Authors = ({ setError, show }) => {
             <tr key={a.name}>
               <td>{a.name}</td>
               <td>{a.born}</td>
-              <td>{a.bookCount}</td>
+              <td>{a.books.length}</td>
             </tr>
           ))}
         </tbody>

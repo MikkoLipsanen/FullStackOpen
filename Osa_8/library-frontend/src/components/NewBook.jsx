@@ -8,9 +8,12 @@ const NewBook = ({ show, setError }) => {
   const [published, setPublished] = useState('')
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
-
+  
   const [ createBook ] = useMutation(CREATE_BOOK, {
-    refetchQueries: [ { query: ALL_BOOKS }, { query: ALL_AUTHORS } ],
+    refetchQueries: [ 
+      { query: ALL_AUTHORS },
+      { query: ALL_BOOKS }
+    ],
     onError: (error) => {
       const messages = error.graphQLErrors.map(e => e.message).join('\n')
       console.log(JSON.stringify(error, null, 2))
