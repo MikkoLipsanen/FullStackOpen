@@ -1,9 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import patientService from "../services/patients";
-import { Patient } from "../types";
+import { Patient, Diagnosis } from "../types";
+
+interface DiagnoseProps {
+  diagnoses: Diagnosis[];
+}
   
-const PatientPage = ( ) => {
+const PatientPage = ( props: DiagnoseProps ) => {
   const [patient, setPatient] = useState<Patient | null>(null);
   const { id } = useParams<{ id: string }>();
 
@@ -17,7 +21,7 @@ const PatientPage = ( ) => {
     void fetchPatient();
   }, [id]);
 
-    return (
+  return (
       <div>
         {patient ? (
           <>
@@ -32,7 +36,7 @@ const PatientPage = ( ) => {
                 {entry.diagnosisCodes && (
                   <ul>
                     {entry.diagnosisCodes.map((code: string) => (
-                      <li key={code}>{code}</li>
+                      <li key={code}>{code}: {props.diagnoses.find(d => d.code === code)?.name}</li>
                     ))}
                   </ul>
                 )}
