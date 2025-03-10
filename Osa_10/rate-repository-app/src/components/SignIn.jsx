@@ -1,8 +1,10 @@
 import { TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { useNavigate } from "react-router";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import theme from '../theme';
-import Text from './Text'
+import Text from './Text';
+import useSignIn from '../hooks/useSignIn';
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -64,10 +66,20 @@ const validationSchema = yup.object().shape({
 })
 
 const SignIn = () => {
-  const onSubmit = (values) => {
-    console.log(values);
+  const [signIn] = useSignIn();
+  let navigate = useNavigate();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+
+    try {
+      const token = await signIn({ username, password });
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
   };
-  console.log(theme.fonts)
+
   const formik = useFormik({
     initialValues: {
       username: '',
