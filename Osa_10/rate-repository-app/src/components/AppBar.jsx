@@ -28,8 +28,18 @@ const AppBar = () => {
                     {
                         <>
                             <AppBarTab text="Repositories" link="/"/>
-                            {user && <SignoutTab text="Sign out"/>}
-                            {!user && <AppBarTab text="Sign in" link="/signin"/>}
+                            {user && 
+                            <>  
+                                <AppBarTab text="Create a review" link="/review"/>
+                                <SignoutTab text="Sign out"/>
+                            </>
+                            }
+                            {!user && 
+                                <> 
+                                    <AppBarTab text="Sign in" link="/signin"/>
+                                    <AppBarTab text="Sign up" link="/signup"/>
+                                </>
+                            }
                         </>
                     }
                 </ScrollView>

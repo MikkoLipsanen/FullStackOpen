@@ -46,7 +46,7 @@ const modifyNumber = (number) => {
 }
 
 const Item = ({item}) => (
-    <View style={styles.flexContainer}>
+    <View testID="repositoryItem" style={styles.flexContainer}>
       <View style={styles.flexItem}>
         <View style={styles.row}>
           <View style={styles.columnLeft}>

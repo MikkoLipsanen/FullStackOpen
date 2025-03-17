@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import theme from '../theme';
 import Text from './Text';
 import useSignIn from '../hooks/useSignIn';
+import useSignUp from '../hooks/useSignUp';
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -57,15 +58,24 @@ const styles = StyleSheet.create({
 });
 
 const validationSchema = yup.object().shape({
-  username: yup
-    .string()
-    .required('Username is required'),
-  password: yup
-    .string()
-    .required('Password is required'),
+    username: yup
+        .string()
+        .min(5)
+        .max(30)
+        .required('Username is required'),
+    password: yup
+        .string()
+        .min(5)
+        .max(50)
+        .required('Password is required'),
+    passwordConfirm: yup
+        .string()
+        .oneOf([yup.ref('password'), null])
+        .required('Password confirmation is required'),
+
 })
 
-export const SignInContainer = ({ onSubmit }) => {
+export const SignUpContainer = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -97,30 +107,43 @@ export const SignInContainer = ({ onSubmit }) => {
         {formik.touched.password && formik.errors.password && (
           <Text margin='signin' color='error'>{formik.errors.password}</Text>
         )}
+        <TextInput
+          placeholder="Password confirmation"
+          secureTextEntry={true}
+          value={formik.values.passwordConfirm}
+          onChangeText={formik.handleChange('passwordConfirm')}
+          style={(formik.touched.passwordConfirm && formik.errors.passwordConfirm) ? styles.error : styles.input}
+        />
+        {formik.touched.passwordConfirm && formik.errors.passwordConfirm && (
+          <Text margin='signin' color='error'>{formik.errors.passwordConfirm}</Text>
+        )}
         <TouchableOpacity style={styles.buttonStyle} onPress={formik.handleSubmit}>
-          <Text align='center' color="white" fontWeight="bold" fontSize="subheading">Sign in</Text>
+          <Text align='center' color="white" fontWeight="bold" fontSize="subheading">Sign up</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const SignIn = () => {
-  const [signIn] = useSignIn();
-  let navigate = useNavigate();
+const SignUp = () => {
+    const [signUp] = useSignUp();
+    const [signIn] = useSignIn();
+    let navigate = useNavigate();
 
-  const onSubmit = async (values) => {
-    const { username, password } = values;
+    const onSubmit = async (values) => {    
+        const { username, password, passwordConfirm } = values;
+        if (password === passwordConfirm) {
+            try {
+                const user = await signUp({ username, password });
+                const token = await signIn({ username, password });
+                navigate("/");
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    };
 
-    try {
-      const token = await signIn({ username, password });
-      navigate("/");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  return <SignInContainer onSubmit={onSubmit} />;
+    return <SignUpContainer onSubmit={onSubmit} />;
 }
 
-export default SignIn;
+export default SignUp;
