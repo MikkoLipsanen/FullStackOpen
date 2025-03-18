@@ -1,7 +1,10 @@
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from "react-router";
 import { Picker } from '@react-native-picker/picker';
+import { useDebounce } from 'use-debounce';
+import { Searchbar } from 'react-native-paper';
 import theme from '../theme';
 import Item from './RepositoryItem'
 import Text from './Text';
@@ -26,28 +29,21 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories, variables, setVariables }) => {
-  let navigate = useNavigate();
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    const props = this.props;
 
-  const repositoryNodes = repositories
-    ? repositories.edges.map(edge => edge.node)
-    : [];
-
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({item}) =>
-        <Pressable onPress={() => {navigate(`/items/${item.id}`)}}>
-          <Item item={item} />
-        </Pressable>
-      }
-      keyExtractor={item => item.id}
-      ListHeaderComponent={() =>  
+    return (
+      <>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={props.setSearchQuery}
+          value={props.searchQuery}
+        />
         <Picker
-          selectedValue={variables}
+          selectedValue={props.variables}
           onValueChange={(itemValue, itemIndex) =>
-            setVariables(itemValue)
+            props.setVariables(itemValue)
           }
           style={styles.picker}
           itemStyle={styles.picker}>
@@ -55,19 +51,57 @@ export const RepositoryListContainer = ({ repositories, variables, setVariables 
           <Picker.Item label="Highest rated repositories" value='RATING_AVERAGE,DESC' />
           <Picker.Item label="Lowest rated repositories" value='RATING_AVERAGE,ASC' />
         </Picker>
-      }
-    />
-  );
+      </>
+    );
+  };
+  render() {
+      const props = this.props;
+      const repositoryNodes = props.repositories
+        ? props.repositories.edges.map(edge => edge.node)
+        : [];
+
+      return (
+        <FlatList
+          data={repositoryNodes}
+          ItemSeparatorComponent={ItemSeparator}
+          renderItem={({item}) =>
+            <Pressable onPress={() => {props.navigate(`/items/${item.id}`)}}>
+              <Item item={item} />
+            </Pressable>
+          }
+          keyExtractor={item => item.id}
+          ListHeaderComponent={this.renderHeader}    
+          onEndReached={props.onEndReach}
+          onEndReachedThreshold={0.5}
+        />
+      );
+    };
 };
 
 const RepositoryList = () => {
   const [variables, setVariables] = useState('CREATED_AT,DESC');
-  const { repositories, loading } = useRepositories({orderBy: variables.split(',')[0], orderDirection: variables.split(',')[1]});
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchKeyword] = useDebounce(searchQuery, 500);
+  const navigate = useNavigate();
+  const { repositories, loading, fetchMore } = useRepositories({first: 2, searchKeyword: searchKeyword, orderBy: variables.split(',')[0], orderDirection: variables.split(',')[1]});
 
   if (loading) {
     return <Text>Loading...</Text>
   }
-  return <RepositoryListContainer repositories={repositories} variables={variables} setVariables={setVariables} />;
+
+  const onEndReach = () => {
+    fetchMore();
+  };
+
+  return <RepositoryListContainer 
+    repositories={repositories} 
+    variables={variables} 
+    setVariables={setVariables} 
+    searchQuery={searchQuery} 
+    setSearchQuery={setSearchQuery} 
+    navigate={navigate}
+    onEndReach={onEndReach}
+  />;
 };
 
 export default RepositoryList;

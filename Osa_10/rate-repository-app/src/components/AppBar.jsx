@@ -31,6 +31,7 @@ const AppBar = () => {
                             {user && 
                             <>  
                                 <AppBarTab text="Create a review" link="/review"/>
+                                <AppBarTab text="My reviews" link="/myreviews"/>
                                 <SignoutTab text="Sign out"/>
                             </>
                             }

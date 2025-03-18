@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_REPOSITORIES = gql`
-    query getRepositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection){
-        repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+    query getRepositories($searchKeyword: String, $orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection){
+        repositories(searchKeyword: $searchKeyword, orderBy: $orderBy, orderDirection: $orderDirection) {
             edges {
                 node {
                     id
@@ -40,6 +40,7 @@ export const GET_REPOSITORY =  gql`
                         text
                         rating
                         createdAt
+                        repositoryId
                         user {
                             id
                             username
@@ -52,10 +53,25 @@ export const GET_REPOSITORY =  gql`
 `;
 
 export const GET_USER = gql`
-    query {
+    query getCurrentUser($includeReviews: Boolean = false) {
         me {
             id
             username
+            reviews @include(if: $includeReviews) {
+                edges {
+                    node {
+                        id
+                        text
+                        rating
+                        createdAt
+                        repositoryId
+                        user {
+                            id
+                            username
+                        }
+                    }
+                }
             }
+        }
     }
 `;
