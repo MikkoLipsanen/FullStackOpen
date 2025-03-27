@@ -1,0 +1,7 @@
+$ nano /usr/src/app/index.js
+Tekstin kopiointi tiedostoon: 
+Ctrl + C ja Ctrl + V
+Tiedoston tallennus nanolla: 
+Ctrl + O
+Tiedoston sulkeminen:
+Ctrl + X

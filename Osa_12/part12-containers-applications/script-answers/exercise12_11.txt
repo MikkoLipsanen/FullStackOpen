@@ -1,0 +1,12 @@
+Exec to Redis container
+$ docker exec -it todo-backend-redis-1 bash
+Open redis-cli
+$ redis-cli
+Find the key
+$ KEY counter
+Check the value of the key
+$ GET counter
+Set the value of the counter to 9001
+SET counter 9001
+Delete the key from the cli
+DEL counter

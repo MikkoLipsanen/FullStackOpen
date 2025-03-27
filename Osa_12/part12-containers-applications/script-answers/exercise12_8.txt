@@ -1,0 +1,16 @@
+Start MongoDB
+$ docker compose -f docker-compose.dev.yml up
+Exec to container
+$ docker exec -it todo-backend-mongo-1 bash
+Start Mongo CLI
+$ mongosh -u root -p example
+Show databases
+$ show dbs
+Access database
+$ use the_database
+Show collections 
+$ show collections
+Insert new Todo
+$ db.todos.insertOne({ text: 'Increase the number of tools in my tool belt', done: false })
+Check that the new item is included in the collection
+$ db.todos.find({})
