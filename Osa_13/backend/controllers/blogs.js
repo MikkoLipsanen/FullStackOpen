@@ -1,9 +1,8 @@
 const router = require('express').Router()
-const jwt = require('jsonwebtoken')
 const { Op } = require("sequelize")
 
-const { Blog, User } = require('../models')
-const { SECRET } = require('../util/config')
+const { tokenExtractor } = require('../util/middleware')
+const { Blog, User, Session } = require('../models')
 
 const printBlogs = (blogs) => {
     blogs.map(blog =>
@@ -13,7 +12,6 @@ const printBlogs = (blogs) => {
 
 router.get('/', async (req, res) => {
     let where = {}
-    console.log(req.query.search)
     if (req.query.search) {
         where = { 
             [Op.or]: [
@@ -35,31 +33,26 @@ router.get('/', async (req, res) => {
     res.json(blogs)
 })
 
-const tokenExtractor = (req, res, next) => {
-    const authorization = req.get('authorization')
-    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-      try {
-        console.log(authorization.substring(7))
-        console.log(SECRET)
-        req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
-      } catch (error) {
-        console.log(error)
-        return res.status(401).json({ error: 'token invalid' })
-      }
-    } else {
-      return res.status(401).json({ error: 'token missing' })
-    }
-  
-    next()
-}
 
 router.post('/', tokenExtractor, async (req, res, next) => {
-    try {
-        const user = await User.findByPk(req.decodedToken.id)
-        const blog = await Blog.create({...req.body, userId: user.id, date: new Date()})
-        return res.json(blog)
-    } catch(error) {
-        next(error)
+    const session = await Session.findOne({
+        where: {
+            userId: req.decodedToken.id
+        }
+    })
+
+    if (session) {
+        try {
+            const user = await User.findByPk(req.decodedToken.id)
+            const blog = await Blog.create({...req.body, userId: user.id, date: new Date()})
+            return res.json(blog)
+        } catch(error) {
+            next(error)
+        }
+    } else {
+        return response.status(400).json({
+            error: 'User is not logged in'
+        })
     }
 })
 
@@ -69,19 +62,23 @@ const blogFinder = async (req, res, next) => {
 }
 
 router.get('/:id', blogFinder, async (req, res) => {
-    const blog = await Blog.findByPk(req.params.id)
-    if (blog) {
-        res.json(blog)
+    if (req.blog) {
+        res.json(req.blog)
     } else {
         res.status(404).end()
     }
 })
 
 router.delete('/:id', tokenExtractor, blogFinder, async (req, res) => {
+    const session = await Session.findOne({
+        where: {
+            userId: req.decodedToken.id
+        }
+    })
+
     try {
-        const blog = await Blog.findByPk(req.params.id)
-        if (blog && blog.userId === req.decodedToken.id) {
-            await blog.destroy()
+        if (req.blog && req.session && req.blog.userId === req.decodedToken.id) {
+            await req.blog.destroy()
         }
         res.status(204).end()
     } catch(error) {

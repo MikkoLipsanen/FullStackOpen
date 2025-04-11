@@ -2,6 +2,6 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "username": "jkukanen",
+    "username": "badvader@starmail.com",
     "password": "secret"
 }

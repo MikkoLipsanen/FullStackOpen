@@ -23,6 +23,13 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
+  year: {
+    type: DataTypes.INTEGER,
+    validate: {
+      min: 1991,
+      max: 2025
+    }
+  },
 }, {
   sequelize,
   underscored: true,

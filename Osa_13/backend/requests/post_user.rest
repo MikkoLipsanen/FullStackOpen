@@ -2,6 +2,7 @@ POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {  
-    "username": "hanman", 
-    "name": "Han Solo"
+    "username": "badvader@starmail.com", 
+    "name": "Darth",
+    "year": 2001
 }
